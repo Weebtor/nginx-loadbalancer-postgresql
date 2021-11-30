@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS producto (
+    id serial PRIMARY KEY,
+    nombre VARCHAR(255) UNIQUE NOT NULL,
+    codigo VARCHAR(65) UNIQUE NOT NULL,
+    precio DECIMAL(5,2) NOT NULL
+)
