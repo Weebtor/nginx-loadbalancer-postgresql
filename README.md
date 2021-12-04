@@ -47,54 +47,70 @@ De forma interna en los contenedores, todas las replizas utilizan el puerto `543
 
 ### Usuarios
 Las bases de datos comparten la contraseña **zukaritas** y los usuarios son los siguientes:
-* **Master**: zuka
-* **Slave**: zukas
+* **Master**: 
+usuario: zuka
+contraseña: zukaritas
+* **Slave**:
+usuario: zukas
+contraseña: zucaritas
 
+### Tablas
 
+```sql
+CREATE TABLE IF NOT EXISTS producto (
+    id serial PRIMARY KEY,
+    nombre VARCHAR(255) UNIQUE NOT NULL,
+    codigo VARCHAR(65) UNIQUE NOT NULL,
+    precio DECIMAL(11,2) NOT NULL
+)
+```
 
 # Configuración de microservicios
 
+
+
 ## Flask Python
+
+### Dependencias
+
+Las dependencias necesarias para que se pueda ejecutar el programa se encuentran en el archivo `requirements.txt`.
+
+### Ejecucion
+
+export FLASK_APP=./microservices/src/flask_app.py
+flask run -h localhost -p 5000
+flask run -h localhost -p 5001
+flask run -h localhost -p 5002
+
+### Metodos HTTP
+
+* GetProduct <dominio>/GetProduct?q=aa
+* AddProduct <dominio>/AddProduct
+```json
+{
+  "nombre":"ejemplo",
+  "codigo":"TEST01",
+  "precio": 500000.6
+}
+```
 
 # Configuración de Nginx
 
-
-
-Update
-
-
-Docker
-
-docker run -dti -p 55432:5432 --name postgresql-master \
-  -e POSTGRESQL_REPLICATION_MODE=master \
-  -e POSTGRESQL_USERNAME=zuka \
-  -e POSTGRESQL_PASSWORD=zukaritas \
-  -e POSTGRESQL_DATABASE=my_database \
-  -e POSTGRESQL_REPLICATION_USER=zukas \
-  -e POSTGRESQL_REPLICATION_PASSWORD=zucaritas \
-  bitnami/postgresql:latest
-
-docker run -dti -p 65432:5432 --name postgresql-slave \
-  --link postgresql-master:master \
-  -e POSTGRESQL_REPLICATION_MODE=slave \
-  -e POSTGRESQL_USERNAME=zuka \
-  -e POSTGRESQL_PASSWORD=zukaritas \
-  -e POSTGRESQL_MASTER_HOST=master \
-  -e POSTGRESQL_MASTER_PORT_NUMBER=5432 \
-  -e POSTGRESQL_REPLICATION_USER=zukas \
-  -e POSTGRESQL_REPLICATION_PASSWORD=zucaritas \
-  bitnami/postgresql:latest
-
-export FLASK_APP=./src/flask_app.py
-flask run -h localhost -p 2000
-
-
-{
-    "nombre":"MIRA",
-    "codigo":"TEST02",
-    "precio": 500000000.6
+```nginx
+upstream flask_servers {
+    # Default Round-Robin
+    # Flask localhost
+    server 127.0.0.1:5000;
+    server 127.0.0.1:5001;
+    server 127.0.0.1:5002;
 }
 
-192.168.1.195/GetProduct?q=aa
+server {
+    # Puerto 
+    listen 80;
+    location / {
+        proxy_pass http://flask_servers;
+    }
+}
+```
 
-192.168.1.195/AddProduct
