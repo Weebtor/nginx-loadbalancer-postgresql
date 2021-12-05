@@ -11,7 +11,7 @@ Implementación de un balanceador de carga con Nginx y replicas de base de datos
 ## Configuración de la base de datos
 
 
-Para hacer las replicas de forma mas sencilla se utilizó **Docker** y los siguientes comandos para instalar ambas versiones del servidor.
+Para hacer las replicas de forma más sencilla se utilizó **Docker** y los siguientes comandos para instalar ambas versiones del servidor.
 
 ```bash
 # servidor master
@@ -39,7 +39,7 @@ docker run -dti -p 65432:5432 --name postgresql-slave \
 A continuación hay una explicación de la configuración de las bases de datos.
 
 ### Puertos
-De forma interna en los contenedores, todas las replizas utilizan el puerto `5432` para PostgreSQL, dentro de la maquina se tienen los siguientes puertos:
+De forma interna en los contenedores, todas las replicas utilizan el puerto `5432` para PostgreSQL, dentro de la maquina se tienen los siguientes puertos:
 * **Master**: Puerto 55432
 * **Slave**: Puerto 65432
 
@@ -54,7 +54,7 @@ Las credenciales de los usuarios son las siguientes:
   * Contraseña: zucaritas
 
 ### Tablas
-Para la creacion de la tabla que almacene los productos se utilizo el siguiente comando.
+Para la creación de la tabla que almacene los productos, se utilizó el siguiente comando.
 ```sql
 CREATE TABLE IF NOT EXISTS producto (
     id serial PRIMARY KEY,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS producto (
  Las dependencias necesarias para que se pueda ejecutar el programa se encuentran en el archivo `requirements.txt`.
 
 ### Ejecucion
-Para comenzar la ejecucion de los servidores se utilizaron los siguientes comandos en el terminal, ubicandonos en la carpeta principal
+Para comenzar la ejecución de los servidores se utilizaron los siguientes comandos en el terminal, ubicandonos en la carpeta principal
 
 ```flask 
 export FLASK_APP=./microservices/src/flask_app.py
@@ -87,7 +87,7 @@ flask run -h localhost -p 5002
 ### Metodos HTTP
 Para realizar las acciones en el servidor se crearon 2 metodos, AddProduct y GetProduct.
 
-A continuacion se adjuntan las direcciones y ejemplos de request para cada uno.
+A continuación se adjuntan las direcciones y ejemplos de request para cada uno.
 
 * AddProduct 
   * Dominio: localhost/AddProduct
@@ -102,13 +102,13 @@ A continuacion se adjuntan las direcciones y ejemplos de request para cada uno.
   ```
 * GetProduct 
   * Dominio: localhost/GetProduct?q=
-  * Para este metodo se debe agregar la palabra a buscar luego de *?q=*, por ejemplo **?q=aaa**
+  * Para este método se debe agregar la palabra a buscar luego de *?q=*, por ejemplo **?q=aaa**
   
 
 
 # Configuración de Nginx
 
-Como configuracion para el balanceador de carga se utilizo el archivo que se ve a continuacion y ubicado en la carpeta `nginx`. Se utilizo el metodo de balanceo round robin y se asigna la direccion de los servidores de replica.
+Como configuración para el balanceador de carga se utilizó el archivo que se ve a continuación y ubicado en la carpeta `nginx`. Se utilizó el método de balanceo round robin y se asigna la direccion de los servidores de réplica.
 ```nginx
 upstream flask_servers {
     # Default Round-Robin
