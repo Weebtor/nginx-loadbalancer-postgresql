@@ -54,7 +54,7 @@ Las credenciales de los usuarios son las siguientes:
   * Contraseña: zucaritas
 
 ### Tablas
-Para la creación de la tabla que almacene los productos en la base de datos my_database, se utilizó la siguiente sentencia.
+Para la creación de la tabla que almacene los productos, se utilizó la siguiente sentencia.
 ```sql
 CREATE TABLE IF NOT EXISTS producto (
     id serial PRIMARY KEY,
@@ -90,7 +90,8 @@ Para realizar las acciones en el servidor se crearon 2 metodos, AddProduct y Get
 A continuación se adjuntan las direcciones y ejemplos de request para cada uno.
 
 * AddProduct 
-  * Dominio: localhost/AddProduct
+  * URL: <localhost:5000>/AddProduct
+  * Metodo: POST
   * Request de ejemplo:
 
   ```json
@@ -101,14 +102,15 @@ A continuación se adjuntan las direcciones y ejemplos de request para cada uno.
     }
   ```
 * GetProduct 
-  * Dominio: localhost/GetProduct?q=
-  * Para este método se debe agregar la palabra a buscar luego de *?q=*, por ejemplo **?q=aaa**
+  * URL: <localhost:5000>/GetProduct?q=
+  * Mestodo: GET
+  * Para este método se debe agregar la palabra a buscar luego de *?q=*, por ejemplo **?q=lapiz** para buscar por el articulo lapiz
   
 
 
 # Configuración de Nginx
 
-Como configuración para el balanceador de carga se utilizó el archivo que se ve a continuación y ubicado en la carpeta `nginx`. Se utilizó el método de balanceo round robin y se asigna la direccion de los servidores de réplica.
+Como configuración para el balanceador de carga se utilizó el archivo que se ve a continuación y ubicado en la carpeta `nginx`. Se utilizó el método de balanceo round robin y se asigna la direccion de los servidores de réplica definidos previamente.
 ```nginx
 upstream flask_servers {
     # Default Round-Robin
