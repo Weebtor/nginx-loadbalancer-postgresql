@@ -103,7 +103,7 @@ A continuación se adjuntan las direcciones y ejemplos de request para cada uno.
   ```
 * GetProduct 
   * URL: <localhost:5000>/GetProduct?q=
-  * Mestodo: GET
+  * Metodo: GET
   * Para este método se debe agregar la palabra a buscar luego de *?q=*, por ejemplo **?q=lapiz** para buscar por el articulo lapiz
   
 
