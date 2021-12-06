@@ -1,5 +1,11 @@
 # nginx-loadbalancer-postgresql
 
+
+### Integrantes
+* Ariel Gomez
+* Pablo Muñoz
+* Victor Sanchez
+
 ## Descripción de la tarea
 
 Implementación de un balanceador de carga con Nginx y replicas de base de datos PostgreSQL, para un microservicio de inventario.
