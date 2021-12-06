@@ -54,7 +54,7 @@ Las credenciales de los usuarios son las siguientes:
   * Contraseña: zucaritas
 
 ### Tablas
-Para la creación de la tabla que almacene los productos, se utilizó la siguiente sentencia.
+Para la creación de la tabla que almacene los productos en la base de datos `my_database`, se utilizó la siguiente sentencia.
 ```sql
 CREATE TABLE IF NOT EXISTS producto (
     id serial PRIMARY KEY,
